@@ -10,6 +10,7 @@ from fastapi import FastAPI
 
 # Local Imports
 from db import db
+from game.game import create_game
 
 app = FastAPI()
 
@@ -23,3 +24,8 @@ async def select_one():
     """ testing db """
     res = db.select_one()
     return {"message": res}
+
+@app.get('/create_game')
+async def _create_game():
+    res = create_game()
+    return res
