@@ -1,0 +1,13 @@
+version: '3'
+services:
+  flyway:
+    image: boxfuse/flyway:5.2.4
+    command: [
+      "-url=jdbc:mysql://db/db",
+      "-user=user",
+      "-password=password",
+      "-connectRetries=60", 
+      "migrate"
+    ]
+    volumes:
+      - ./db:/flyway/sql

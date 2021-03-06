@@ -9,11 +9,9 @@ Author(s): Grant W
 from fastapi import FastAPI
 
 # Local Imports
-from db import DB
+from db import db
 
 app = FastAPI()
-
-db = DB()
 
 @app.get("/")
 async def root():

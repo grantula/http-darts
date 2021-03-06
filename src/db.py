@@ -33,3 +33,5 @@ class DB(object):
 
     def select_one(self):
         return self.execute_query("SELECT 1000;")
+
+db = DB()
