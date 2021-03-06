@@ -26,4 +26,4 @@ def create_game():
     """
     res = db.execute_raw(q) 
     game_id = get_last_insert_id(res)
-    return {'game_id': game_id} 
+    return {'game_id': game_id}

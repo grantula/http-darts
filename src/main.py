@@ -11,21 +11,14 @@ from fastapi import FastAPI
 # Local Imports
 from db import db
 from game.game import create_game
+import endpoints
 
 app = FastAPI()
 
-@app.get("/")
-async def root():
-    return {"message": "Hello World"}
+# Get endpoints from our router
+app.include_router(endpoints.router)
 
-
-@app.get("/select_one")
-async def select_one():
-    """ testing db """
-    res = db.select_one()
-    return {"message": res}
-
-@app.get('/create_game')
-async def _create_game():
-    res = create_game()
-    return res
+# Register a status endpoint
+@app.get("/status")
+async def status():
+    return {"ding": "dong"}
