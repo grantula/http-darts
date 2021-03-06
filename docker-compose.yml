@@ -1,0 +1,39 @@
+version: '3'
+services:
+  db:
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'db'
+      MYSQL_USER: 'user'
+      MYSQL_PASSWORD: 'password'
+      MYSQL_ROOT_PASSWORD: 'password'
+    ports:
+      - '3306:3306'
+    expose:
+      - '3306'
+    volumes:
+      - db:/var/lib/mysql
+  darts:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./src:/usr/src/app
+    ports:
+      - "8000:80"
+    environment:
+      DB_USER: 'user'
+      DB_HOST: 'db'
+      DB_PASS: 'password'
+      DB_NAME: ''
+    # command: ["python", "main.py"]
+    command: [
+      "uvicorn", 
+      "main:app",
+      "--reload",
+      "--host", "0.0.0.0",
+      "--port", "80"
+    ]
+volumes:
+  db:
