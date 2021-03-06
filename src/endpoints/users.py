@@ -2,31 +2,55 @@
 
 """
 
+from db import db
+from sqlalchemy import text
+from pydantic import BaseModel
+from fastapi import HTTPException
+from exceptions import HTTPNotImplementedException
+
+class User(BaseModel):
+    name: str
+
+
 class UsersCollectionEndpoint:
 
     uri = '/v1/users'
 
     async def get():
+        q = text("SELECT * FROM d_user")
+        res = db.execute_query(q)
         """View all users"""
-        return {}
+        return res
 
-    async def post():
+    async def post(user: User):
         """Create new user"""
-        return {}
+        q = text(
+            """
+            INSERT INTO d_user (name) VALUES (:user_name)
+            """
+        )
+        params = {'user_name': user.name}
+        user_id = db.perform_insert(q, params)
+        return {"user_id": user_id}
 
 
 class UsersResourceEndpoint:
 
     uri = '/v1/users/{user_id:int}'
 
-    async def get(game_id):
+    async def get(user_id):
         """Get singular user"""
-        return {"method": "get", "user_id": user_id}
+        q = text(
+            """SELECT * FROM d_user WHERE id = :user_id"""
+        )
+        params = {'user_id': user_id}
+        res = db.execute_query(q, params)
+        return res
 
-    async def put(game_id):
+    async def put(user_id):
         """Update user"""
-        return {"method": "put", "user_id": user_id}
+        raise HTTPNotImplementedException
 
-    async def delete(game_id):
+    async def delete(user_id):
         """Mark as inactive if exists"""
-        return {"method": "delete", "user_id": user_id}
+        raise HTTPNotImplementedException
