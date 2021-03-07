@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS
 f_game (
    id           INT       NOT NULL AUTO_INCREMENT,
    game_type_id INT       NOT NULL,
-   status       ENUM      ('in_progress', 'complete', 'canceled'),
+   status       ENUM      ('created', 'in_progress', 'complete', 'canceled'),
    winner       INT       DEFAULT NULL,
    create_date  TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
    update_date  TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,

@@ -19,7 +19,7 @@ conn_str = "mysql+mysqlconnector://{}:{}@{}/{}".format(
     os.environ['DB_NAME']
 )
 
-class DB(object):
+class DB:
 
     def __init__(self):
         self.db_engine = sa.create_engine(conn_str,
